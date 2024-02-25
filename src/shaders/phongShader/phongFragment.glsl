@@ -138,7 +138,7 @@ float PCF(sampler2D shadowMap, vec4 coords, float biasC, float filterRadiusUV) {
   float visibility = 0.0;
   for(int i = 0; i < NUM_SAMPLES; i++){
     vec2 offset = poissonDisk[i] * filterRadiusUV;
-    float shadowDepth = useShadowMap(shadowMap, coords, biasC, filterRadiusUV);
+    float shadowDepth = useShadowMap(shadowMap, coords + vec4(offset,0,0), biasC, filterRadiusUV);
     if(coords.z > shadowDepth + EPS){
       visibility++;
     }
