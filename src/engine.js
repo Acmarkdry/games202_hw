@@ -52,9 +52,9 @@ function GAMES202Main() {
 
 	// Add shapes
 	
-	let floorTransform = setTransform(0, 0, -30, 4, 4, 4);
-	let obj1Transform = setTransform(0, 0, 0, 20, 20, 20);
-	let obj2Transform = setTransform(40, 0, -40, 10, 10, 10);
+	let floorTransform = setTransform(0, 0, -30, 0, 0, 0, 4, 4, 4);
+	let obj1Transform = setTransform(0, 0, 0, 0, 0, 0, 20, 20, 20);
+	let obj2Transform = setTransform(40, 0, -40, 0, 0, 0, 10, 10, 10);
 
 	loadOBJ(renderer, 'assets/mary/', 'Marry', 'PhongMaterial', obj1Transform);
 	loadOBJ(renderer, 'assets/mary/', 'Marry', 'PhongMaterial', obj2Transform);
@@ -78,20 +78,28 @@ function GAMES202Main() {
 	}
 	createGUI();
 
+	let prevTime = 0;
+
 	function mainLoop(now) {
 		cameraControls.update();
-
-		renderer.render();
+		let deltaime = (now - prevTime) / 1000;
+		renderer.render(now, deltaime);
 		requestAnimationFrame(mainLoop);
+		prevTime = now;
 	}
 	requestAnimationFrame(mainLoop);
 }
 
-function setTransform(t_x, t_y, t_z, s_x, s_y, s_z) {
+function setTransform(t_x, t_y, t_z,rx,ry,rz, s_x, s_y, s_z) {
 	return {
 		modelTransX: t_x,
 		modelTransY: t_y,
 		modelTransZ: t_z,
+		
+		modelRotateX:rx,
+		modelRotateY:ry,
+		modelRotateZ:rz,
+
 		modelScaleX: s_x,
 		modelScaleY: s_y,
 		modelScaleZ: s_z,
