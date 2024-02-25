@@ -15,33 +15,40 @@ class DirectionalLight {
         }
     }
 
-    CalcLightMVP(translate, scale) {
-        let lightMVP = mat4.create();
-        let modelMatrix = mat4.create();
-        let viewMatrix = mat4.create();
-        let projectionMatrix = mat4.create();
+    //DirectionalLight.js
+    CalcLightMVP(translate, scale) {  
+        let lightMVP = mat4.create();  
+        let modelMatrix = mat4.create();  
+        let viewMatrix = mat4.create();  
+        let projectionMatrix = mat4.create();  
 
-        // Model transform
-        mat4.translate(modelMatrix,modelMatrix,translate);
-        mat4.scale(modelMatrix,modelMatrix,scale);
+        //https://glmatrix.net/docs/module-mat4.html
 
-        // View transform
-        mat4.lookAt(viewMatrix,viewMatrix,this.lightPos,this.focalPoint,this.lightUp);
-    
-        // Projection transform
-        var left = 100;
-        var right = -left;
-        var height = 100;
-        var bottom = -height;
+        //Edit Start  
 
-        var near = 0.01;
-        var far = 200;
+        // Model transform  
+        mat4.translate(modelMatrix, modelMatrix, translate)  
+        mat4.scale(modelMatrix, modelMatrix, scale)  
 
-        mat4.ortho(projectionMatrix,left,right,bottom,top,near,far);
+        // View transform  
+        mat4.lookAt(viewMatrix, this.lightPos, this.focalPoint, this.lightUp)  
 
-        mat4.multiply(lightMVP, projectionMatrix, viewMatrix);
-        mat4.multiply(lightMVP, lightMVP, modelMatrix);
+        // Projection transform  
+        var r = 100;  
+        var l = -r;  
+        var t = 100;  
+        var b = -t;  
 
-        return lightMVP;
+        var n = 0.01;  
+        var f = 800;  
+
+        mat4.ortho(projectionMatrix, l, r, b, t, n, f);  
+
+        //Edit End  
+
+        mat4.multiply(lightMVP, projectionMatrix, viewMatrix);  
+        mat4.multiply(lightMVP, lightMVP, modelMatrix);  
+
+        return lightMVP;  
     }
 }
